@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="" />
+  <img width=300 src="https://raw.githubusercontent.com/tjtanjin/my-api/master/assets/app_logo.png" />
   <h1 align="center">My-API</h1>
 </p>
 
@@ -8,6 +8,7 @@
 * [Features](#features)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Deployment](#deployment)
 * [Team](#team)
 * [Contributing](#contributing)
 * [Others](#others)
@@ -17,8 +18,8 @@ My-API is a collection of lightweight utility APIs that aims to address common u
 
 ### Features
 My-API currently has 2 modules available. For more information on each of these modules and what they do, please refer to their respective user guides (linked below):
-- [Counter](todo: update link)
-- [Shields](todo: update link)
+- [Counter](https://github.com/tjtanjin/my-api/blob/master/docs/counter/UserGuide.md)
+- [Shields](https://github.com/tjtanjin/my-api/blob/master/docs/shields/UserGuide.md)
 
 
 ### Technologies
