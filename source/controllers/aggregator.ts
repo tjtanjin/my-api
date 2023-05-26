@@ -53,17 +53,21 @@ const getEndpointValue = async (config: any) => {
     const headers = config["fields"]["headers"];
     const body = config["fields"]["body"];
     const path_to_value = config["fields"]["path_to_value"];
-    let result: AxiosResponse = await axios({
-        url: url,
-        method: method,
-        headers: headers,
-        data: body
-    });
-    const path_breakdown = path_to_value.split(".");
-    for (let i = 0; i < path_breakdown.length; i++) {
-        result = result[path_breakdown[i] as keyof typeof result]
+    try {
+        let result: AxiosResponse = await axios({
+            url: url,
+            method: method,
+            headers: headers,
+            data: body
+        });
+        const path_breakdown = path_to_value.split(".");
+        for (let i = 0; i < path_breakdown.length; i++) {
+            result = result[path_breakdown[i] as keyof typeof result]
+        }
+        return result as unknown as string;
+    } catch (err) {
+        return undefined;
     }
-    return result as unknown as string;
 }
 
 export default { getAggregate };
