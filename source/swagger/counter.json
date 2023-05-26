@@ -1,0 +1,304 @@
+{
+    "/counter/api/v1/get/{key}": {
+        "get": {
+            "tags": ["Counter Module"],
+            "summary": "Retrieves a counter.",
+            "description": "Retrieves the value for a counter based on its given key.",
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": "x-api-key",
+                    "description": "(Optional) API key for the module as configured in .env file."
+                },
+                {
+                    "in": "path",
+                    "name": "key",
+                    "required": true,
+                    "description": "Key to identify the counter value to retrieve."
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["success", "message", "data"],
+                                "properties": {
+                                    "success": {
+                                        "description": "Shows true if operation is successful, false otherwise.",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "message": {
+                                        "description": "Message describing the outcome of the request.",
+                                        "type": "string",
+                                        "example": "Ok."
+                                    },
+                                    "data": {
+                                        "description": "JSON containing requested key and value.",
+                                        "type": "json",
+                                        "example": {"counter": 0}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": { "description": "Not authorized" },
+                "404": { "description": "Counter not found" },
+                "500": { "description": "Internal server error" }
+            }
+        }
+    },
+    "/counter/api/v1/get": {
+        "get": {
+            "tags": ["Counter Module"],
+            "summary": "Retrieves all counters.",
+            "description": "Retrieves all counters and their values.",
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": "x-api-key",
+                    "description": "(Optional) API key for the module as configured in .env file."
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["success", "message", "data"],
+                                "properties": {
+                                    "success": {
+                                        "description": "Shows true if operation is successful, false otherwise.",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "message": {
+                                        "description": "Message describing the outcome of the request.",
+                                        "type": "string",
+                                        "example": "Ok."
+                                    },
+                                    "data": {
+                                        "description": "JSON containing all keys and values.",
+                                        "type": "json",
+                                        "example": {"counter1": 0, "counter2": 10, "counter3": 94}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": { "description": "Not authorized" },
+                "404": { "description": "Counter not found" },
+                "500": { "description": "Internal server error" }
+            }
+        }
+    },
+    "/counter/api/v1/create": {
+        "post": {
+            "tags": ["Counter Module"],
+            "summary": "Creates a counter.",
+            "description": "Creates a new counter with given key and initial value.",
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": "x-api-key",
+                    "description": "(Optional) API key for the module as configured in .env file."
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": ["key", "value"],
+                            "properties": {
+                                "key": {
+                                    "description": "Key used to identify the new counter.",
+                                    "type": "string",
+                                    "example": "my_custom_counter"
+                                },
+                                "value": {
+                                    "description": "Initial value to set the new counter to.",
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                }
+              },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["success", "message", "data"],
+                                "properties": {
+                                    "success": {
+                                        "description": "Shows true if operation is successful, false otherwise.",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "message": {
+                                        "description": "Message describing the outcome of the request.",
+                                        "type": "string",
+                                        "example": "Ok."
+                                    },
+                                    "data": {
+                                        "description": "JSON containing created key and value.",
+                                        "type": "json",
+                                        "example": {"my_custom_counter": 1}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": { "description": "Not authorized" },
+                "404": { "description": "Not found" },
+                "500": { "description": "Internal server error" }
+            }
+        }
+    },
+    "/counter/api/v1/update": {
+        "post": {
+            "tags": ["Counter Module"],
+            "summary": "Updates a counter.",
+            "description": "Updates an existing counter with given key, value and action.",
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": "x-api-key",
+                    "description": "(Optional) API key for the module as configured in .env file."
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": ["key", "value", "action"],
+                            "properties": {
+                                "key": {
+                                    "description": "Key used to identify the existing counter.",
+                                    "type": "string",
+                                    "example": "my_custom_counter"
+                                },
+                                "value": {
+                                    "description": "Value to adjust the counter with.",
+                                    "type": "number",
+                                    "example": 1
+                                },
+                                "action": {
+                                    "description": "Type of action to take on the counter (add, subtract or set).",
+                                    "type": "string",
+                                    "example": "ADD"
+                                }
+                            }
+                        }
+                    }
+                }
+              },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["success", "message", "data"],
+                                "properties": {
+                                    "success": {
+                                        "description": "Shows true if operation is successful, false otherwise.",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "message": {
+                                        "description": "Message describing the outcome of the request.",
+                                        "type": "string",
+                                        "example": "Ok."
+                                    },
+                                    "data": {
+                                        "description": "JSON containing specified key and updated value.",
+                                        "type": "json",
+                                        "example": {"my_custom_counter": 2}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": { "description": "Not authorized" },
+                "404": { "description": "Not found" },
+                "500": { "description": "Internal server error" }
+            }
+        }
+    },
+    "/counter/api/v1/delete": {
+        "delete": {
+            "tags": ["Counter Module"],
+            "summary": "Deletes a counter.",
+            "description": "Deletes an existing counter with given key.",
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": "x-api-key",
+                    "description": "(Optional) API key for the module as configured in .env file."
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": ["key"],
+                            "properties": {
+                                "key": {
+                                    "description": "Key used to identify the existing counter.",
+                                    "type": "string",
+                                    "example": "my_custom_counter"
+                                }
+                            }
+                        }
+                    }
+                }
+              },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["success", "message", "data"],
+                                "properties": {
+                                    "success": {
+                                        "description": "Shows true if operation is successful, false otherwise.",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "message": {
+                                        "description": "Message describing the outcome of the request.",
+                                        "type": "string",
+                                        "example": "Ok."
+                                    },
+                                    "data": {
+                                        "description": "JSON containing deleted key.",
+                                        "type": "json",
+                                        "example": {"key": "my_custom_counter"}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": { "description": "Not authorized" },
+                "404": { "description": "Not found" },
+                "500": { "description": "Internal server error" }
+            }
+        }
+    }
+}

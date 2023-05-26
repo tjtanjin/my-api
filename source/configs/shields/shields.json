@@ -1,0 +1,26 @@
+{
+    "smc_files_converted": {
+        "label": {
+            "type": "STATIC",
+            "fields": {
+                "value": "Files Converted"
+            }
+        },
+        "message": {
+            "type": "ENDPOINT",
+            "fields": {
+                "url": "http://localhost:3000/counter/api/v1/get/smc_files_converted",
+                "method": "GET",
+                "headers": {},
+                "body": {},
+                "path_to_value": "data.data.smc_files_converted"
+            }
+        },
+        "color": {
+            "type": "STATIC",
+            "fields": {
+                "value": "purple"
+            }
+        }
+    }
+}
