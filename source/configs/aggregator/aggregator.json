@@ -1,5 +1,11 @@
 {
     "smc_files_converted": {
+        "schemaVersion": {
+            "type": "STATIC",
+            "fields": {
+                "value": 1
+            }
+        },
         "label": {
             "type": "STATIC",
             "fields": {

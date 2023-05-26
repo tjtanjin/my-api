@@ -1,0 +1,32 @@
+{
+    "/aggregator/api/v1/get/{key}": {
+        "get": {
+            "tags": ["Aggregator Module"],
+            "summary": "Provides an aggregated JSON output.",
+            "description": "Provides an aggregated JSON output based on provided key and configuration.",
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "key",
+                    "required": true,
+                    "description": "Key to identify the aggregator specified in the config."
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Returns a JSON object containing properties specified in the configuration and their values.",
+                                "properties": {}
+                            }
+                        }
+                    }
+                },
+                "404": { "description": "Key not found" },
+                "500": { "description": "Internal server error" }
+            }
+        }
+    }
+}

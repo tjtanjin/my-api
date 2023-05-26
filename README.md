@@ -14,12 +14,12 @@
 * [Others](#others)
 
 ### Introduction
-My-API is a collection of lightweight utility APIs that aims to address common use cases across projects. Organized into modules, users are given the flexibility to choose which feature they require. Module configurations are neatly handled within the `.env` file and clear user guides are written for each module. Motivation for this project arose from the need to have a counter API to share the number of files converted for another project of mine - [Simple Media Converter](https://github.com/tjtanjin/simple-media-converter). To present it in the form of a custom [shield](https://shields.io), yet another API endpoint was required. Hence the first two modules, **Counter** and **Shields** were created. I hope to expand on this project in the near future with the possibility of supporting more storage options as well as additional modules such as **FileHosting**.
+My-API is a collection of lightweight utility APIs that aims to address common use cases across projects. Organized into modules, users are given the flexibility to choose which feature they require. Module configurations are neatly handled within the `.env` file and clear user guides are written for each module. Motivation for this project arose from the need to have a counter API to share the number of files converted for another project of mine - [Simple Media Converter](https://github.com/tjtanjin/simple-media-converter). To present it in the form of a custom [shield](https://shields.io), yet another API endpoint was required. Hence the first two modules, **Counter** and **Aggregator** were created. I hope to expand on this project in the near future with the possibility of supporting more storage options as well as additional modules such as **FileHosting**.
 
 ### Features
 My-API currently has 2 modules available. For more information on each of these modules and what they do, please refer to their respective user guides (linked below):
 - [Counter](https://github.com/tjtanjin/my-api/blob/master/docs/counter/UserGuide.md)
-- [Shields](https://github.com/tjtanjin/my-api/blob/master/docs/shields/UserGuide.md)
+- [Aggregator](https://github.com/tjtanjin/my-api/blob/master/docs/aggregator/UserGuide.md)
 
 
 ### Technologies

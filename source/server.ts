@@ -29,10 +29,10 @@ if (parseBool(process.env.COUNTER_ENABLED)) {
     console.log("[Counter API] Counter Module loaded.");
 }
 
-// load shields module if enabled
-if (parseBool(process.env.SHIELD_ENABLED)) {
-    app.use(String(process.env.SHIELD_ENDPOINT), require("./routes/shields"));
-    console.log("[Shields API] Shields Module loaded.");
+// load aggregator module if enabled
+if (parseBool(process.env.AGGREGATOR_ENABLED)) {
+    app.use(String(process.env.AGGREGATOR_ENDPOINT), require("./routes/aggregator"));
+    console.log("[Aggregator API] Aggregator Module loaded.");
 }
 
 // load app based on environment
