@@ -79,7 +79,7 @@ const updateCounter = async (req: Request, res: Response) => {
         return res.status(401).json({success: false, data: {}});
     }
     const key: string = req.body.key;
-    const value: number = req.body.value;
+    const value: number = Number(req.body.value);
     const action: string = req.body.action.toUpperCase();
 
     let result: CounterObj;

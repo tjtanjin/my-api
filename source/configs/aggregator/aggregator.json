@@ -15,7 +15,7 @@
         "message": {
             "type": "ENDPOINT",
             "fields": {
-                "url": "http://localhost:3000/counter/api/v1/get/smc_files_converted",
+                "url": "https://my-api.tjtanjin.com:2999/counter/api/v1/get/smc_files_converted",
                 "method": "GET",
                 "headers": {},
                 "body": {},
@@ -25,7 +25,7 @@
         "color": {
             "type": "STATIC",
             "fields": {
-                "value": "purple"
+                "value": "blue"
             }
         }
     }
