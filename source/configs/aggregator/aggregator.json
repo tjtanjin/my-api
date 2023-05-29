@@ -15,7 +15,7 @@
         "message": {
             "type": "ENDPOINT",
             "fields": {
-                "url": "https://my-api.tjtanjin.com:2999/counter/api/v1/get/smc_files_converted",
+                "url": "https://my-api.tjtanjin.com/counter/api/v1/get/smc_files_converted",
                 "method": "GET",
                 "headers": {},
                 "body": {},
