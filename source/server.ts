@@ -1,6 +1,4 @@
 require('dotenv').config();
-import https from "https";
-import fs from "fs";
 import express, { Express } from "express";
 import bodyParser from "body-parser";
 const app: Express = express();
@@ -35,17 +33,6 @@ if (parseBool(process.env.AGGREGATOR_ENABLED)) {
     console.log("[Aggregator API] Aggregator Module loaded.");
 }
 
-// load app based on environment
-if (process.env.NODE_ENV == "development") {
-    app.listen(process.env.APP_PORT, () => {
-	    console.log("API service [development] started on PORT " + process.env.APP_PORT);
-    })
-} else {
-    https.createServer({
-        key: fs.readFileSync(process.env.SSL_PRIVATE_KEY as string),
-        cert: fs.readFileSync(process.env.SSL_CERTIFICATE as string),
-    }, app)
-    .listen(process.env.APP_PORT, () => {
-        console.log("API service [production] started on PORT " + process.env.APP_PORT);
-    });
-}
+app.listen(process.env.APP_PORT, () => {
+    console.log("API service started on PORT " + process.env.APP_PORT);
+})
