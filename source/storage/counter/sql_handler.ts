@@ -21,7 +21,7 @@ class SqlHandler implements StorageInterface {
     public async getCounterValue(key: string): Promise<CounterObj> {
 		try {
 			const connection = await getConnection();
-			const results = await executeQuery(connection, "SELECT _value FROM " +
+			const results = await executeQueryAndReleaseConnection(connection, "SELECT _value FROM " +
 					process.env.COUNTER_DATABASE_TABLE + " WHERE _key = ?", [key]);
 			if (results.length != 1) {
 				return {success: false, message: "Key not found.", data: {}};
@@ -35,7 +35,7 @@ class SqlHandler implements StorageInterface {
 	public async getAllCounterValues(): Promise<CounterObj> {
 		try {
 			const connection = await getConnection();
-			const results = await executeQuery(connection, "SELECT _key, _value FROM " + process.env.COUNTER_DATABASE_TABLE, []);
+			const results = await executeQueryAndReleaseConnection(connection, "SELECT _key, _value FROM " + process.env.COUNTER_DATABASE_TABLE, []);
 
 			let container: Object = {};
 			for (let i = 0; i < results.length; i++) {
@@ -51,7 +51,7 @@ class SqlHandler implements StorageInterface {
     public async createCounter(key: string, value: number): Promise<CounterObj> {
 		try {
 			const connection = await getConnection();
-			const results = await executeQuery(connection, "INSERT INTO " +
+			const results = await executeQueryAndReleaseConnection(connection, "INSERT INTO " +
 					process.env.COUNTER_DATABASE_TABLE + " (_key, _value) VALUES (?, ?)", [key, value]);
 			
 			if (results.affectedRows != 1) {
@@ -78,7 +78,7 @@ class SqlHandler implements StorageInterface {
     public async deleteCounter(key: string): Promise<CounterObj> {
 		try {
 			const connection = await getConnection();	
-			const results = await executeQuery(connection, "DELETE FROM " +
+			const results = await executeQueryAndReleaseConnection(connection, "DELETE FROM " +
 					process.env.COUNTER_DATABASE_TABLE + " WHERE _key = ?", [key]);
 			
 			if (results.affectedRows != 1) {
@@ -96,7 +96,7 @@ const updateCounterValue = async (key: string, value: number, action: string): P
     try {
         const connection = await getConnection();
         await beginTransaction(connection);
-        const selectResults = await executeQuery(connection, "SELECT _value FROM " +
+        const selectResults = await executeQueryNoReleaseConnection(connection, "SELECT _value FROM " +
 				process.env.COUNTER_DATABASE_TABLE + " WHERE _key = ?", [key]);
         
         if (selectResults.length !== 1) {
@@ -113,7 +113,7 @@ const updateCounterValue = async (key: string, value: number, action: string): P
             counterValue = value;
         }
         
-        const updateResults = await executeQuery(connection, "UPDATE " + process.env.COUNTER_DATABASE_TABLE +
+        const updateResults = await executeQueryNoReleaseConnection(connection, "UPDATE " + process.env.COUNTER_DATABASE_TABLE +
 				" SET _value = ? WHERE _key = ?", [counterValue, key]);
         
         if (updateResults.affectedRows !== 1) {
@@ -153,14 +153,25 @@ const beginTransaction = (connection: any): Promise<void> => {
     });
 };
 
-const executeQuery = (connection: any, query: string, values: any[]): Promise<any> => {
+const executeQueryAndReleaseConnection = (connection: any, query: string, values: any[]): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        connection.query(query, values, (err: any, results: any) => {
+            connection.release();
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
+
+const executeQueryNoReleaseConnection = (connection: any, query: string, values: any[]): Promise<any> => {
     return new Promise((resolve, reject) => {
         connection.query(query, values, (err: any, results: any) => {
             if (err) {
-                connection.release();
                 reject(err);
             } else {
-                connection.release();
                 resolve(results);
             }
         });
