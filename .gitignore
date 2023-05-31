@@ -2,6 +2,7 @@
 /ssl_cert
 
 /node_modules
+/build
 
 .DS_Store
 
