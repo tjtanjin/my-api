@@ -157,8 +157,10 @@ const executeQuery = (connection: any, query: string, values: any[]): Promise<an
     return new Promise((resolve, reject) => {
         connection.query(query, values, (err: any, results: any) => {
             if (err) {
+                connection.release();
                 reject(err);
             } else {
+                connection.release();
                 resolve(results);
             }
         });
