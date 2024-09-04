@@ -7,8 +7,8 @@ npx tsc
 cp ./.env ./build
 
 # move swagger files
-cp ./source/swagger.json ./build
-cp -r ./source/swagger/ ./build
+cp ./src/swagger.json ./build
+cp -r ./src/swagger/ ./build
 
 # finish
 echo "Build completed."

@@ -1,0 +1,78 @@
+{
+    "smc_files_converted": {
+        "schemaVersion": {
+            "type": "STATIC",
+            "fields": {
+                "value": 1
+            }
+        },
+        "label": {
+            "type": "STATIC",
+            "fields": {
+                "value": "Files Converted"
+            }
+        },
+        "message": {
+            "type": "ENDPOINT",
+            "fields": {
+                "url": "https://my-api.tjtanjin.com/counter/api/v1/get/smc_files_converted",
+                "method": "GET",
+                "headers": {},
+                "body": {},
+                "path_to_value": "data.data.smc_files_converted",
+                "ttl": 900000,
+                "resurrected_ttl": 10800000
+            }
+        },
+        "labelColor": {
+            "type": "STATIC",
+            "fields": {
+                "value": "grey"
+            }
+        },
+        "color": {
+            "type": "STATIC",
+            "fields": {
+                "value": "blue"
+            }
+        }
+    },
+    "rcb_discord_member_count": {
+        "schemaVersion": {
+            "type": "STATIC",
+            "fields": {
+                "value": 1
+            }
+        },
+        "label": {
+            "type": "STATIC",
+            "fields": {
+                "value": "Total Members"
+            }
+        },
+        "message": {
+            "type": "ENDPOINT",
+            "fields": {
+                "url": "https://discord.com/api/v9/invites/6R4DK4G5Zh?with_counts=true",
+                "method": "GET",
+                "headers": {},
+                "body": {},
+                "path_to_value": "data.approximate_member_count",
+                "ttl": 900000,
+                "resurrected_ttl": 10800000
+            }
+        },
+        "labelColor": {
+            "type": "STATIC",
+            "fields": {
+                "value": "grey"
+            }
+        },
+        "color": {
+            "type": "STATIC",
+            "fields": {
+                "value": "blue"
+            }
+        }
+    }
+}

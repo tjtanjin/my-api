@@ -3,6 +3,19 @@ import axios, { AxiosResponse } from 'axios';
 
 import mainConfig from '../configs/aggregator/aggregator.json';
 
+interface CacheItem {
+    value: string;
+    ttl: number;
+    resurrected_ttl: number;
+}
+  
+interface Cache {
+    [key: string]: CacheItem;
+}
+
+// for caching endpoint values (e.g. {smc_files_converted: {value: "256", ttl: 1725460156, resurrected_ttl: 1725490156}})
+const cache: Cache = {};
+
 /**
  * Retrieves JSON object based on given key.
  * 
@@ -26,7 +39,7 @@ const getAggregate = async (req: Request, res: Response) => {
         if (propertyType == "STATIC") {
             result = {...result, [property]: getStaticValue(propertyConfig)};
         } else if (propertyType == "ENDPOINT") {
-            result = {...result, [property]: await getEndpointValue(propertyConfig)};
+            result = {...result, [property]: await getEndpointValue(property, propertyConfig)};
         }
     }
 
@@ -47,7 +60,11 @@ const getStaticValue = (config: any) => {
  * 
  * @param config property config to parse
  */
-const getEndpointValue = async (config: any) => {
+const getEndpointValue = async (property: string, config: any) => {
+    if (property in cache && Date.now() < cache.property.ttl) {
+        return cache.property.value;
+    }
+
     const url = config["fields"]["url"]
     const method = config["fields"]["method"].toUpperCase();
     const headers = config["fields"]["headers"];
@@ -58,15 +75,24 @@ const getEndpointValue = async (config: any) => {
             url: url,
             method: method,
             headers: headers,
-            data: body
+            data: method.toUpperCase() === "GET" ? null : body
         });
         const path_breakdown = path_to_value.split(".");
         for (let i = 0; i < path_breakdown.length; i++) {
             result = result[path_breakdown[i] as keyof typeof result]
         }
-        return result as unknown as string;
+        const value = result.toString();
+        cache.property = {
+            value: value,
+            ttl: config["fields"]["ttl"],
+            resurrected_ttl: config["fields"]["resurrected_ttl"]
+        };
+        return value;
     } catch (err) {
-        return undefined;
+        if (property in cache && Date.now() < cache.property.resurrected_ttl) {
+            return cache.property.value;
+        }
+        return "";
     }
 }
 

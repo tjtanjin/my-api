@@ -2,9 +2,9 @@
   "name": "my-api",
   "version": "1.0.0",
   "description": "",
-  "main": "source/server.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon source/server.ts",
+    "dev": "nodemon src/server.ts",
     "build": "./build.sh",
     "deploy": "node ./build/server.js"
   },
